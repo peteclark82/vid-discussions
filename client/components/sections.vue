@@ -1,5 +1,5 @@
 <style scoped>
-  li.active-section {
+  li.active {
     background-color:#DDDDFF;
   }
 </style>
@@ -10,7 +10,7 @@
     Section Name : <input type="text" v-model="sectionName" placeholder="Please enter a section name"/>    
     <button v-on:click="addSection">Add Section</button>
     <ul>
-      <li v-for="section in currentVideoSections" v-bind:class="{ 'active-section': currentSection == section }">{{section.name}} - {{section.timestamp}}</li>
+      <li v-for="section in currentVideoSections" v-bind:class="{ 'active': currentSection == section }">{{section.name}} - {{section.timestamp | timestamp}}</li>
     </ul>
     Current Section : {{ currentSection ? currentSection : "NOTHING!" }}
   </div>  
