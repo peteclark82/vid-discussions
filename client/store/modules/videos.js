@@ -2,18 +2,16 @@ import axios from 'axios';
 import * as types from '../mutation-types';
 import * as atypes from '../action-types';
 
-// initial state
+
 const state = {
   currentVideo : null,
   currentVideoPlayer : null,
   top10Videos : []
 };
 
-// getters
 const getters = {
 };
 
-// actions
 const actions = {
   [atypes.StripNamespace(atypes.ADD_VIDEO)] ({ commit }, { videoUrl }) {
     return new Promise((resolve, reject) => {
@@ -36,7 +34,6 @@ const actions = {
   }
 };
 
-// mutations
 const mutations = {
   [types.SET_CURRENT_VIDEO] (state, { videoPlayer, video }) {    
     state.currentVideoPlayer = videoPlayer;

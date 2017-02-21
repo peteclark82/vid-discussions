@@ -1,5 +1,3 @@
-const ObjectID = require('mongodb').ObjectID
-
 const util = require('../util');
 
 
@@ -15,7 +13,7 @@ module.exports = (data) => {
       const userId = req.user.id;
       const { videoUrl } = req.body;
 
-      data.Video.createFromUrl({ videoUrl }).then(video => {
+      data.Video.createFromUrl({ videoUrl, userId }).then(video => {
         video.save().then(() => {
           res.status(201).json({ video });
         }, ({ errors }) => {
@@ -34,8 +32,21 @@ module.exports = (data) => {
 
     apiRoutes.get('/video/:videoId', util.isAuthenticated, (req, res) => {
       const videoId = req.params.videoId;
-      data.Video.findOne({ _id : ObjectID(videoId) }).then((video) => { 
+      data.Video.findOne({ _id : videoId }).then((video) => { 
         res.status(200).json({ video });
+      });
+    });
+
+    apiRoutes.post('/video/:videoId/section', util.isAuthenticated, (req, res) => {
+      const userId = req.user.id;
+      const videoId = req.params.videoId;
+      const { sectionName, timestamp } = req.body;
+
+      var section = new data.Section({ video: videoId, name: sectionName, timestamp });
+      section.save().then(() => {
+        res.status(201).json({ section });
+      }, ({ errors }) => {
+        res.validationErrors(errors);
       });
     });
 

@@ -1,6 +1,7 @@
 module.exports = function(mongooseConnection) {
   return {
+    User: require('./entities/user').model(mongooseConnection),
     Video: require('./entities/video').model(mongooseConnection),
-    User: require('./entities/user').model(mongooseConnection) 
+    Section: require('./entities/section').model(mongooseConnection), 
   };  
 }

@@ -1,4 +1,4 @@
-const passport = require('passport'), LocalStrategy = require('passport-local'), ObjectID = require('mongodb').ObjectID
+const passport = require('passport'), LocalStrategy = require('passport-local');
 
 const util = require('../util');
 
@@ -37,7 +37,7 @@ module.exports = (data, server) => {
     ));
 
     passport.serializeUser((user, done) => {
-      data.User.update({ _id: ObjectID(user._id) }, user).then(() => {
+      data.User.update({ _id: user._id }, user).then(() => {
         done(null, user.username);
       }, error => {
         done(null, false, { message: "Error serialialising user" });
