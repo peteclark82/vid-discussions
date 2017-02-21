@@ -1,0 +1,2 @@
+export const SET_CURRENT_VIDEO = "SET_CURRENT_VIDEO";
+export const SET_TOP10_VIDEOS = "SET_TOP10_VIDEOS";
