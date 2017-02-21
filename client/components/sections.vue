@@ -6,6 +6,9 @@
     Sections
     Section Name : <input type="text" v-model="sectionName" placeholder="Please enter a section name"/>    
     <button v-on:click="addSection">Add Section</button>
+    <ul>
+      <li v-for="section in currentVideoSections">{{section.name}} - {{section.timestamp}}</li>
+    </ul>
   </div>  
 </template>
 
@@ -15,6 +18,9 @@
 
   export default {
     name: 'sections',
+    props: [
+      'videoId'
+    ],
     data: function() {
       return {
         sectionName: null
@@ -23,8 +29,14 @@
     computed: {
       ...mapState('videos', [
         'currentVideo',
-        'currentVideoPlayer'
+        'currentVideoPlayer',
+        'currentVideoSections'
       ])
+    },
+    watch: {
+      'currentVideo': function(newValue, oldValue) {
+        this.$store.dispatch(atypes.SET_CURRENT_VIDEO_SECTIONS);
+      }
     },
     methods: {
       addSection() {
@@ -34,10 +46,9 @@
             sectionName: this.sectionName,
             timestamp: timestamp
           }).then((section) => {
-            console.log("success section");
-            console.log(section);
+            this.$store.dispatch(atypes.SET_CURRENT_VIDEO_SECTIONS);
           }, (error) => {
-            console.log(error);
+            alert(error);
           });
         });
       }

@@ -24,7 +24,7 @@
       ])      
     },
     created() {
-      this.$store.dispatch(atypes.GET_TOP10_VIDEOS);           
+      this.$store.dispatch(atypes.SET_TOP10_VIDEOS);           
     }
   };
 </script>

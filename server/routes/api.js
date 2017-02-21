@@ -50,6 +50,14 @@ module.exports = (data) => {
       });
     });
 
+    apiRoutes.get('/video/:videoId/sections', util.isAuthenticated, (req, res) => {
+      const videoId = req.params.videoId;
+
+      data.Section.find({ video: videoId }).sort({ timestamp: 1 }).then((sections) => { 
+        res.status(200).json({ sections });
+      });
+    });
+
     return apiRoutes;
   };
 };

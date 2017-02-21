@@ -2,8 +2,11 @@
 
 export const ADD_VIDEO = "videos/ADD_VIDEO";
 export const SET_CURRENT_VIDEO = "videos/SET_CURRENT_VIDEO";
-export const GET_TOP10_VIDEOS = "videos/GET_TOP10_VIDEOS";
+export const SET_TOP10_VIDEOS = "videos/SET_TOP10_VIDEOS";
+export const SET_CURRENT_VIDEO_SECTIONS = "videos/SET_CURRENT_VIDEO_SECTIONS";
+
 export const ADD_SECTION = "sections/ADD_SECTION";
+
 
 export const StripNamespace = function(name) {
   var parts = name.split('/');

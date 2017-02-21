@@ -4,9 +4,10 @@ import * as atypes from '../action-types';
 
 
 const state = {
-  currentVideo : null,
-  currentVideoPlayer : null,
-  top10Videos : []
+  currentVideo: null,
+  currentVideoPlayer: null,
+  top10Videos: [],
+  currentVideoSections: []
 };
 
 const getters = {
@@ -27,9 +28,15 @@ const actions = {
       commit(types.SET_CURRENT_VIDEO, { videoPlayer, video });
     });
   },
-  [atypes.StripNamespace(atypes.GET_TOP10_VIDEOS)] ({ commit }) {
+  [atypes.StripNamespace(atypes.SET_TOP10_VIDEOS)] ({ commit }) {
     axios.get('/api/video/top10').then(({ data: { videos }}) => {
       commit(types.SET_TOP10_VIDEOS, { videos });
+    });
+  },
+  [atypes.StripNamespace(atypes.SET_CURRENT_VIDEO_SECTIONS)] ({ commit }) {
+    const videoId = state.currentVideo._id;    
+    axios.get(`/api/video/${videoId}/sections`).then(({ data: { sections }}) => {
+      commit(types.SET_CURRENT_VIDEO_SECTIONS, { sections });
     });
   }
 };
@@ -42,6 +49,9 @@ const mutations = {
   },  
   [types.SET_TOP10_VIDEOS] (state, { videos }) {
     state.top10Videos = videos;
+  },
+  [types.SET_CURRENT_VIDEO_SECTIONS] (state, { sections }) {
+    state.currentVideoSections = sections;
   }
 };
 
