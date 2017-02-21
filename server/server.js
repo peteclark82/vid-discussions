@@ -28,7 +28,7 @@ server.use(session({
 server.use(flash());
 server.set('views', './views');
 server.set('view engine', 'pug');
-server.use(express.static('public'));
+server.use(express.static('build'));
 server.use(util.generalErrors());
 server.use(util.validationErrors());
 
