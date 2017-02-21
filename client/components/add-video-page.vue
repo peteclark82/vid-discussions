@@ -13,7 +13,7 @@
 
 <script>
   import router from 'vue-router';  
-  import { mapState } from 'vuex';
+  import { mapState, mapActions } from 'vuex';
   import * as atypes from '../store/action-types';
 
   import Top10Videos from './top10-videos.vue'

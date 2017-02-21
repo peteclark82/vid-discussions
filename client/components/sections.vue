@@ -29,7 +29,7 @@
     methods: {
       addSection() {
         this.currentVideoPlayer.getCurrentTime().then(timestamp => {
-          this[atypes.ADD_SECTION]({
+          this.$store.dispatch(atypes.ADD_SECTION, {
             videoId: this.currentVideo._id,
             sectionName: this.sectionName,
             timestamp: timestamp
@@ -40,10 +40,7 @@
             console.log(error);
           });
         });
-      },
-      ...mapActions([
-        atypes.ADD_SECTION
-      ])
+      }
     }
   };
 </script>
