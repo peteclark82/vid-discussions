@@ -6,13 +6,15 @@ import * as atypes from '../action-types';
 const state = {
   currentVideo: null,
   currentVideoPlayer: null,
-  currentSection: null,
   top10Videos: [],
   currentVideoSections: [],
   currentVideoTime: 0
 };
 
 const getters = {
+  currentSection: (state, getters) => {
+    return getCurrentSection({ time : state.currentVideoTime });
+  }
 };
 
 
@@ -38,8 +40,6 @@ const actions = {
         videoPlayer.getCurrentTime().then((time) => {
           if (time !== undefined) {
             commit(types.SET_CURRENT_VIDEO_TIME, { time });            
-            let section = getCurrentSection({ time });
-            commit(types.SET_CURRENT_SECTION, { section });
           }        
         });
       }, 500);      
@@ -58,6 +58,33 @@ const actions = {
   }
 };
 
+const mutations = {
+  [types.SET_CURRENT_VIDEO] (state, { videoPlayer, video }) {    
+    state.currentVideoPlayer = videoPlayer;
+    state.currentVideo = video;    
+    videoPlayer.loadVideoById(video.youTubeVideoId);
+  },  
+  [types.SET_CURRENT_VIDEO_TIME] (state, { time }) {
+    state.currentVideoTime = time;
+  },
+  [types.SET_TOP10_VIDEOS] (state, { videos }) {
+    state.top10Videos = videos;
+  },
+  [types.SET_CURRENT_VIDEO_SECTIONS] (state, { sections }) {
+    state.currentVideoSections = sections;
+  }
+};
+
+export default {
+  namespaced: true,
+  state,
+  getters,
+  actions,
+  mutations
+};
+
+
+/* Private Functions */
 function getCurrentSection({ time }) {
   let section = null;    
 
@@ -76,31 +103,3 @@ function getCurrentSection({ time }) {
 
   return section;
 }
-
-const mutations = {
-  [types.SET_CURRENT_VIDEO] (state, { videoPlayer, video }) {    
-    state.currentVideoPlayer = videoPlayer;
-    state.currentVideo = video;    
-    videoPlayer.loadVideoById(video.youTubeVideoId);
-  },  
-  [types.SET_CURRENT_VIDEO_TIME] (state, { time }) {
-    state.currentVideoTime = time;
-  },
-  [types.SET_CURRENT_SECTION] (state, { section }) {
-    state.currentSection = section;
-  },
-  [types.SET_TOP10_VIDEOS] (state, { videos }) {
-    state.top10Videos = videos;
-  },
-  [types.SET_CURRENT_VIDEO_SECTIONS] (state, { sections }) {
-    state.currentVideoSections = sections;
-  }
-};
-
-export default {
-  namespaced: true,
-  state,
-  getters,
-  actions,
-  mutations
-};

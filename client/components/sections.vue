@@ -12,12 +12,12 @@
     <ul>
       <li v-for="section in currentVideoSections" v-bind:class="{ 'active-section': currentSection == section }">{{section.name}} - {{section.timestamp}}</li>
     </ul>
-    Current Section : {{ currentSection ? currentSection.name : "NOTHING!" }}
+    Current Section : {{ theCurrentSection ? theCurrentSection.name : "NOTHING!" }}
   </div>  
 </template>
 
 <script>
-  import { mapState, mapActions } from 'vuex';
+  import { mapState, mapActions, mapGetters } from 'vuex';
   import * as atypes from '../store/action-types';  
 
   export default {
@@ -33,9 +33,11 @@
     computed: {
       ...mapState('videos', [
         'currentVideo',
-        'currentSection',
         'currentVideoTime',
         'currentVideoSections'
+      ]),
+      ...mapGetters('videos', [
+        'currentSection'
       ])
     },
     watch: {
