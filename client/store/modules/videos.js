@@ -15,7 +15,7 @@ const getters = {
 
 // actions
 const actions = {
-  [atypes.ADD_VIDEO] ({ commit }, { videoUrl }) {
+  [atypes.StripNamespace(atypes.ADD_VIDEO)] ({ commit }, { videoUrl }) {
     return new Promise((resolve, reject) => {
       axios.post('/api/video', { videoUrl }).then(({ data:{ video } }) => {
         resolve(video);
@@ -24,12 +24,12 @@ const actions = {
       }); 
     });    
   },
-  [atypes.SET_CURRENT_VIDEO] ({ commit }, { videoPlayer, videoId }) {      
+  [atypes.StripNamespace(atypes.SET_CURRENT_VIDEO)] ({ commit }, { videoPlayer, videoId }) {      
     axios.get('/api/video/' + videoId).then(({ data: { video }}) => {
       commit(types.SET_CURRENT_VIDEO, { videoPlayer, video });
     });
   },
-  [atypes.GET_TOP10_VIDEOS] ({ commit }) {
+  [atypes.StripNamespace(atypes.GET_TOP10_VIDEOS)] ({ commit }) {
     axios.get('/api/video/top10').then(({ data: { videos }}) => {
       commit(types.SET_TOP10_VIDEOS, { videos });
     });
@@ -49,6 +49,7 @@ const mutations = {
 };
 
 export default {
+  namespaced: true,
   state,
   getters,
   actions,

@@ -32,7 +32,7 @@
         this.$store.dispatch(atypes.ADD_VIDEO, { videoUrl: this.videoUrl }).then(({_id}) => {
           this.$router.push( { path : '/video/'+_id });
         }, ({ validationErrors }) => {
-          this.validationErrors = validationErrors;
+          this.validationErrors = validationErrors || [];
         });           
       },
       getValidationError(name) {

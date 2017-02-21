@@ -22,7 +22,7 @@ module.exports = (data) => {
           res.validationErrors(errors);
         });
       }, ({ errors }) => {
-        res.generalErrors(errors);
+        res.validationErrors(errors);
       });      
     });
 

@@ -15,9 +15,9 @@
   export default {
     name: 'sections',
     computed: {
-      ...mapState({
-        'currentVideoPlayer': state => state.videos.currentVideoPlayer
-      })
+      ...mapState('videos',[
+        'currentVideoPlayer'
+      ])
     },
     methods: {
       addSection() {

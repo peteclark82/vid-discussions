@@ -26,9 +26,9 @@
       'videoId'
     ],
     computed: {
-      ...mapState({
-        'currentVideo': state => state.videos.currentVideo
-      })
+      ...mapState('videos',[
+        'currentVideo'
+      ])
     },
     watch: {
       videoId(newValue, oldValue) {

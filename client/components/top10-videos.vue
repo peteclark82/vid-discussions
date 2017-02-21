@@ -19,9 +19,9 @@
   export default {
     name: 'top10-videos',
     computed: {
-      ...mapState({
-        top10Videos : state => state.videos.top10Videos
-      })
+      ...mapState('videos',[
+        'top10Videos'
+      ])      
     },
     created() {
       this.$store.dispatch(atypes.GET_TOP10_VIDEOS);           
