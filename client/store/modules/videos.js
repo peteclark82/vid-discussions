@@ -13,10 +13,22 @@ const state = {
 
 const getters = {
   currentSection: (state, getters) => {
-    return getCurrentSection({ time : state.currentVideoTime });
+    let section = null;    
+    for(let i=0; i<state.currentVideoSections.length; i++) {
+      let thisSection = state.currentVideoSections[i], nextSection = state.currentVideoSections[i+1];
+      if (state.currentVideoTime >= thisSection.timestamp) {
+        if (nextSection === undefined) {
+          section = thisSection; break;
+        } else {
+          if (state.currentVideoTime < nextSection.timestamp) {
+            section = thisSection; break;
+          }
+        }
+      }      
+    }
+    return section;
   }
 };
-
 
 let pollInterval = null;
 
@@ -82,24 +94,3 @@ export default {
   actions,
   mutations
 };
-
-
-/* Private Functions */
-function getCurrentSection({ time }) {
-  let section = null;    
-
-  for(var i=0; i<state.currentVideoSections.length; i++) {
-    var thisSection = state.currentVideoSections[i];
-    var nextSection = state.currentVideoSections[i+1];
-    if (nextSection !== undefined) {
-      if (thisSection.timestamp <= time && nextSection.timestamp > time) {
-        section = thisSection;
-        break;
-      }
-    } else {
-      section = thisSection;
-    }
-  }
-
-  return section;
-}

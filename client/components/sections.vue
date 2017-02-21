@@ -12,7 +12,7 @@
     <ul>
       <li v-for="section in currentVideoSections" v-bind:class="{ 'active-section': currentSection == section }">{{section.name}} - {{section.timestamp}}</li>
     </ul>
-    Current Section : {{ theCurrentSection ? theCurrentSection.name : "NOTHING!" }}
+    Current Section : {{ currentSection ? currentSection : "NOTHING!" }}
   </div>  
 </template>
 
@@ -46,20 +46,16 @@
       }
     },
     methods: {
-      addSection() {
-        console.log(this.currentVideoTime);
-        return;
-        //this.currentVideoPlayer.getCurrentTime().then(timestamp => {
-          this.$store.dispatch(atypes.ADD_SECTION, {
-            videoId: this.currentVideo._id,
-            sectionName: this.sectionName,
-            timestamp: this.currentVideoTime
-          }).then((section) => {
-            this.$store.dispatch(atypes.SET_CURRENT_VIDEO_SECTIONS);
-          }, (error) => {
-            alert(error);
-          });
-        //});
+      addSection() {        
+        this.$store.dispatch(atypes.ADD_SECTION, {
+          videoId: this.currentVideo._id,
+          sectionName: this.sectionName,
+          timestamp: this.currentVideoTime
+        }).then((section) => {
+          this.$store.dispatch(atypes.SET_CURRENT_VIDEO_SECTIONS);
+        }, (error) => {
+          alert(error);
+        });
       }
     }
   };
