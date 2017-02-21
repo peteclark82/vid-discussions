@@ -27,7 +27,8 @@
     ],
     computed: {
       ...mapState('videos',[
-        'currentVideo'
+        'currentVideo',
+        'currentVideoPlayer'
       ])
     },
     watch: {
@@ -37,7 +38,7 @@
     },
     mounted() {
       videoPlayer = YouTubePlayer('video-player');
-      this.$store.dispatch(atypes.SET_CURRENT_VIDEO, { videoPlayer, videoId : this.videoId });
+      this.$store.dispatch(atypes.SET_CURRENT_VIDEO, { videoPlayer, videoId : this.videoId });      
     }
   };
 </script>

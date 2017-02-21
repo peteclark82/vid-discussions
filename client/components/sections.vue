@@ -1,4 +1,7 @@
-<style>
+<style scoped>
+  li.active-section {
+    background-color:#DDDDFF;
+  }
 </style>
 
 <template>
@@ -7,8 +10,9 @@
     Section Name : <input type="text" v-model="sectionName" placeholder="Please enter a section name"/>    
     <button v-on:click="addSection">Add Section</button>
     <ul>
-      <li v-for="section in currentVideoSections">{{section.name}} - {{section.timestamp}}</li>
+      <li v-for="section in currentVideoSections" v-bind:class="{ 'active-section': currentSection == section }">{{section.name}} - {{section.timestamp}}</li>
     </ul>
+    Current Section : {{ currentSection ? currentSection.name : "NOTHING!" }}
   </div>  
 </template>
 
@@ -29,7 +33,8 @@
     computed: {
       ...mapState('videos', [
         'currentVideo',
-        'currentVideoPlayer',
+        'currentSection',
+        'currentVideoTime',
         'currentVideoSections'
       ])
     },
@@ -40,17 +45,19 @@
     },
     methods: {
       addSection() {
-        this.currentVideoPlayer.getCurrentTime().then(timestamp => {
+        console.log(this.currentVideoTime);
+        return;
+        //this.currentVideoPlayer.getCurrentTime().then(timestamp => {
           this.$store.dispatch(atypes.ADD_SECTION, {
             videoId: this.currentVideo._id,
             sectionName: this.sectionName,
-            timestamp: timestamp
+            timestamp: this.currentVideoTime
           }).then((section) => {
             this.$store.dispatch(atypes.SET_CURRENT_VIDEO_SECTIONS);
           }, (error) => {
             alert(error);
           });
-        });
+        //});
       }
     }
   };
