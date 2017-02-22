@@ -1,4 +1,4 @@
-const passport = require('passport'), LocalStrategy = require('passport-local');
+const passport = require('passport'), LocalStrategy = require('passport-local'), auth = require('passport-local-authenticate');
 
 const util = require('../util');
 
@@ -22,11 +22,22 @@ module.exports = (data, server) => {
 
   function configurePassport() {
     passport.use(new LocalStrategy(
-      (username, password, done) => {        
-        data.User.getUserByUsernameAndPassword({ username, password }).then((user) => {
+      (username, password, done) => {  
+        data.User.findOne({ username }).then((user) => {
           if (user !== null) {
-            delete user.passwordHash;
-            done(null, user);
+            auth.verify('password', { hash: user.passwordHash, salt: user.passwordSalt }, function(err, verified) {
+              if (err) { 
+                done(null, false, { message: "Error attempting to login" }); 
+                return;
+              }
+              if (verified) {
+                delete user.passwordHash;
+                delete user.passwordSalt;
+                done(null, user);
+              } else {
+                done(null, false, { message: "Username and password combination could not be found" });
+              }
+            });            
           } else {
             done(null, false, { message: "Username and password combination could not be found" });
           }          

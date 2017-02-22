@@ -1,4 +1,4 @@
-const mongoose = require('mongoose'), crypto = require('crypto');
+const mongoose = require('mongoose');
 
 const user = module.exports = {
   schema: mongoose.Schema({   
@@ -10,6 +10,10 @@ const user = module.exports = {
     passwordHash: {
       type: String,
       required: [true, "You must have a hashed password"]
+    },
+    passwordSalt: {
+      type: String,
+      required: [true, "You must have a salt for the hashed password"]
     },
     firstName: {
       type: String,
@@ -28,11 +32,6 @@ const user = module.exports = {
   
   model: function(mongooseConnection) {
     const model = mongooseConnection.model('User', user.schema);
-
-    model.getUserByUsernameAndPassword = ({ username, password }) => {
-      const hashedPassword = crypto.createHash('md5').update(password).digest("hex");
-      return model.findOne({ username, passwordHash: hashedPassword });
-    };
 
     return model;     
   }

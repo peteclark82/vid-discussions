@@ -46,6 +46,7 @@
     "node-uuid": "^1.4.7",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
+    "passport-local-authenticate": "^1.2.0",
     "pug": "^2.0.0-beta3",
     "vue": "^2.0.0-alpha.8",
     "vue-router": "^2.2.1",
