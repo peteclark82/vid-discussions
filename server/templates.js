@@ -3,10 +3,10 @@ module.exports = {
     video: {
       dataTemplate: {
         'topic': {
-          type: 'PublicFigure'
+          type: 'public-figure'
         },
         'summary': {
-          type: 'PublicFigure'
+          type: 'public-figure'
         }
       },
       defaultValues: {

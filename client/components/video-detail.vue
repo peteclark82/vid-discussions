@@ -7,6 +7,7 @@
     <ul v-if="videoDetail !== null">
       <li v-for="field,name in template">
         <label>{{ name }}</label>
+        {{field.type}}
         <div :id="'field-'+ name" :is="field.type" :editMode="editMode" v-model="videoDetail[name]" @input="fieldUpdated"></div>
       </li>
     </ul>
