@@ -10,8 +10,8 @@ module.exports = {
         }
       },
       defaultValues: {
-        'topic': 'The Topic',
-        'summary': 'The Summary'
+        'topic': '',
+        'summary': ''
       }
     },
     section: {
