@@ -1,12 +1,17 @@
-<style>
+<style scoped>
+  .col {
+    border:1px solid #BBB;
+  }
 </style>
 
 <template>
-  <div>   
-    <top10-videos></top10-videos>  
-    <show-video :videoId="videoId"></show-video>
-    <sections :videoID="videoId"></sections>
-    <video-detail v-model="currentVideoDetail" :editMode="false"></video-detail>
+  <div class="container">
+    <div class="row">
+      <div class="col s8"><show-video :videoId="videoId"></show-video></div>
+      <div class="col s4"><sections :videoID="videoId"></sections></div>
+      <div class="col s9"><video-detail v-model="currentVideoDetail" :editMode="false"></video-detail></div>
+      <div class="col s3"><top10-videos></top10-videos></div>
+    </div>             
   </div> 
 </template>
 

@@ -8,6 +8,7 @@ import AddVideoPage from './components/add-video-page.vue';
 import ShowVideoPage from './components/show-video-page.vue';
 
 
+
 const routes = [
   { name: 'addVideo', path: '/', props: false, component: AddVideoPage },
   { name: 'showVideo', path: '/video/:videoId', props: true, component: ShowVideoPage },
