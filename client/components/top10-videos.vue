@@ -3,7 +3,7 @@
 
 <template>
   <div> 
-    <h2>Top 10 Videos : {{ top10Videos.length }}</h2>   
+    <h2>Top 10 Videos</h2>   
     <ul>
       <li v-for="video in top10Videos">
         <img :src="`https://i.ytimg.com/vi/${video.youTubeVideoId}/hqdefault.jpg?custom=true&w=336&h=188&stc=true&jpg444=true&jpgq=90&sp=68`" style="width:100px; height:60px;"/>

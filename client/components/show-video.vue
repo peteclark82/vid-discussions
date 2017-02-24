@@ -3,7 +3,7 @@
 
 <template>
   <div>    
-    <h2>Show Video : {{currentVideo == null ? "null" : currentVideo._id}}</h2>
+    <h2>Show Video</h2>
     <div id="video-player"></div>
   </div>
 </template>
