@@ -17,7 +17,7 @@ module.exports = {
     section: {
       dataTemplate: {
         'speaker': {
-          type: 'PublicFigure'
+          type: 'public-figure'
         }
       }
     }

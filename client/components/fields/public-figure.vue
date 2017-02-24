@@ -16,7 +16,7 @@
   import { mapState } from 'vuex';
   
   export default {
-    name: 'PublicFigure',
+    name: 'public-figure',
     props: { 
       editMode: { type: Boolean },
       value: String
