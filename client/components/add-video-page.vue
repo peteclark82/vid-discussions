@@ -7,6 +7,7 @@
     Add Video<br/>
     <span v-show="isValidationErrorShowing('videoUrl')">{{ getValidationError('videoUrl') }}<br/></span>
     <input type="text" v-model="videoUrl" placeholder="Paste YouTube URL Here"/>
+    <video-detail v-model="videoDetail" :editMode="true"></video-detail>
     <button v-on:click="addVideo">Add Video</button>
   </div>
 </template>
@@ -16,20 +17,22 @@
   import { mapState, mapActions } from 'vuex';
   import * as atypes from '../store/action-types';
 
-  import Top10Videos from './top10-videos.vue'
+  import Top10Videos from './top10-videos.vue';
+  import VideoDetail from './video-detail.vue';
   
   export default {
     name: 'add-video-page',
-    props: [
-      'videoId'
-    ],
-    data: () => ({      
-      videoUrl : null,
-      validationErrors : []
-    }),
+    props: [ 'videoId' ],
+    data: function() {  
+      return {    
+        validationErrors : [],
+        videoUrl : null,
+        videoDetail: null
+      };
+    },
     methods: {
       addVideo() {
-        this.$store.dispatch(atypes.ADD_VIDEO, { videoUrl: this.videoUrl }).then(({_id}) => {
+        this.$store.dispatch(atypes.ADD_VIDEO, { videoUrl: this.videoUrl, videoDetail: this.videoDetail }).then(({_id}) => {
           this.$router.push( { path : '/video/'+_id });
         }, ({ validationErrors }) => {
           this.validationErrors = validationErrors || [];
@@ -42,8 +45,14 @@
         return this.validationErrors[name] != undefined;
       }
     },
-    components: {
-      Top10Videos
-    }
+    mounted() {
+      ( this.videoId !== undefined 
+        ? this.$store.dispatch(atypes.GET_VIDEO_DETAIL, { videoId: this.videoId }) 
+        : this.$store.dispatch(atypes.GET_VIDEO_DETAIL_DEFAULT))
+      .then((videoDetail) => {
+        this.videoDetail = videoDetail;
+      });
+    },
+    components: { Top10Videos, VideoDetail }
   };
 </script>

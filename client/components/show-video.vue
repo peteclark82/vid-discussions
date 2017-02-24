@@ -3,14 +3,9 @@
 
 <template>
   <div>    
-    Show Video : {{currentVideo == null ? "null" : currentVideo._id}}
-
-    YouTubeVideoId : {{currentVideo == null ? "null" : currentVideo.youTubeVideoId}}
-    <div id="video-player">
-    </div>
+    <h2>Show Video : {{currentVideo == null ? "null" : currentVideo._id}}</h2>
+    <div id="video-player"></div>
   </div>
-
-  
 </template>
 
 <script>

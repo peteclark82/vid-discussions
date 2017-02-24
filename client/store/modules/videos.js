@@ -8,6 +8,7 @@ const state = {
   currentVideoPlayer: null,
   top10Videos: [],
   currentVideoSections: [],
+  currentVideoDetail: null,
   currentVideoTime: 0
 };
 
@@ -33,13 +34,13 @@ const getters = {
 let pollInterval = null;
 
 const actions = {
-  [atypes.StripNamespace(atypes.ADD_VIDEO)] ({ commit }, { videoUrl }) {
+  [atypes.StripNamespace(atypes.ADD_VIDEO)] ({ commit }, { videoUrl, videoDetail }) {
     return new Promise((resolve, reject) => {
       axios.post('/api/video', { videoUrl }).then(({ data:{ video } }) => {
-        resolve(video);
-      }, ({ data }) => {
-        reject(data);
-      }); 
+        axios.post(`/api/video/${video._id}/detail`, { detail: videoDetail }).then(({ data:{ detail } }) => {
+          resolve(video);
+        }, ({ data }) => { reject(data); });        
+      }, ({ data }) => { reject(data); }); 
     });    
   },
   [atypes.StripNamespace(atypes.SET_CURRENT_VIDEO)] ({ commit }, { videoPlayer, videoId }) {      
@@ -67,6 +68,39 @@ const actions = {
     axios.get(`/api/video/${videoId}/sections`).then(({ data: { sections }}) => {
       commit(types.SET_CURRENT_VIDEO_SECTIONS, { sections });
     });
+  },
+  [atypes.StripNamespace(atypes.SET_CURRENT_VIDEO_DETAIL)] ({ commit }) {
+    const videoId = state.currentVideo._id;    
+    axios.get(`/api/video/${videoId}/detail`).then(({ data: { detail }}) => {
+      commit(types.SET_CURRENT_VIDEO_DETAIL, { detail });
+    });
+  },
+  [atypes.StripNamespace(atypes.GET_VIDEO_DETAIL)] ({ commit }, { videoId }) {
+    return new Promise((resolve, reject) => {
+      axios.get(`/api/video/${videoId}/detail`).then(({ data: { detail }}) => {
+        resolve(detail);
+      }, ({ data }) => {
+        reject(data);
+      });
+    });    
+  },
+  [atypes.StripNamespace(atypes.GET_VIDEO_DETAIL_DEFAULT)] ({ commit }) {
+    return new Promise((resolve, reject) => {
+      axios.get(`/api/video/detail-default-values`).then(({ data: { data }}) => {
+        resolve(data);
+      }, ({ data }) => {
+        reject(data);
+      });
+    });  
+  },
+  [atypes.StripNamespace(atypes.GET_VIDEO_DETAIL_FORM)] ({ commit }) {
+    return new Promise((resolve, reject) => {
+      axios.get(`/api/video/detail-form`).then(({ data: { template }}) => {
+        resolve(template);
+      }, ({ data }) => {
+        reject(data);
+      });
+    });    
   }
 };
 
@@ -84,6 +118,9 @@ const mutations = {
   },
   [types.SET_CURRENT_VIDEO_SECTIONS] (state, { sections }) {
     state.currentVideoSections = sections;
+  },
+  [types.SET_CURRENT_VIDEO_DETAIL] (state, { detail }) {
+    state.currentVideoDetail = detail;
   }
 };
 

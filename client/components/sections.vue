@@ -6,7 +6,7 @@
 
 <template>
   <div>
-    Sections
+    <h2>Sections</h2>
     Section Name : <input type="text" v-model="sectionName" placeholder="Please enter a section name"/>    
     <button v-on:click="addSection">Add Section</button>
     <ul>
@@ -41,7 +41,7 @@
       ])
     },
     watch: {
-      'currentVideo': function(newValue, oldValue) {
+      currentVideo(newValue, oldValue) {
         this.$store.dispatch(atypes.SET_CURRENT_VIDEO_SECTIONS);
       }
     },
