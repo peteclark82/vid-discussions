@@ -16,13 +16,6 @@ const routes = [
 
 const router = new VueRouter({ mode: 'history', routes });
 
-var app = new Vue({
-  router,
-  store 
-}).$mount('#app-container');
-
-
-/* Filters */
 Vue.filter('timestamp', (value) => {
   var sec_num = parseInt(value, 10);
   var hours   = Math.floor(sec_num / 3600);
@@ -33,3 +26,8 @@ Vue.filter('timestamp', (value) => {
   if (seconds < 10) {seconds = "0"+seconds;}
   return hours+':'+minutes+':'+seconds;
 });
+
+var app = new Vue({
+  router,
+  store 
+}).$mount('#app-container');

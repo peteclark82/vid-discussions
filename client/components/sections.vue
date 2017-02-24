@@ -7,10 +7,20 @@
 <template>
   <div>
     <h2>Sections</h2>
-    Section Name : <input type="text" v-model="sectionName" placeholder="Please enter a section name"/>    
-    <button v-on:click="addSection">Add Section</button>
+    Section Name : <input type="text" v-model="sectionName" placeholder="Please enter a section name"/>
+    TimeStamp: 
+      <a href="javascript:;" @click="navigateVideo(-20)">&lt;&lt;&lt;</a> |
+      <a href="javascript:;" @click="navigateVideo(-5)">&lt;&lt;</a> |
+      <a href="javascript:;" @click="navigateVideo(-1)">&lt;</a>
+      <input type="text" :value="currentVideoTime | timestamp" readonly style="width:60px;"/>
+      <a href="javascript:;" @click="navigateVideo(1)">&gt;</a>
+      <a href="javascript:;" @click="navigateVideo(5)">&gt;&gt;</a> |
+      <a href="javascript:;" @click="navigateVideo(20)">&gt;&gt;&gt;</a> |
+      <br/>
+    <button @click="addSection">Add Section</button>
+
     <ul>
-      <li v-for="section in currentVideoSections" v-bind:class="{ 'active': currentSection == section }">{{section.name}} - {{section.timestamp | timestamp}}</li>
+      <li v-for="section in currentVideoSections" v-bind:class="{ 'active': currentSection == section }">{{section.currentDetail ? section.currentDetail.name : '???'}} - {{section.currentDetail ? section.currentDetail.timestamp : '???'| timestamp}}</li>
     </ul>
     Current Section : {{ currentSection ? currentSection : "NOTHING!" }}
   </div>  
@@ -33,6 +43,7 @@
     computed: {
       ...mapState('videos', [
         'currentVideo',
+        'currentVideoPlayer',
         'currentVideoTime',
         'currentVideoSections'
       ]),
@@ -56,6 +67,10 @@
         }, (error) => {
           alert(error);
         });
+      },
+      navigateVideo(seconds) {
+        const newTime = this.currentVideoTime + seconds;
+        this.currentVideoPlayer.seekTo(newTime, true);            
       }
     }
   };

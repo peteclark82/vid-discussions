@@ -6,15 +6,7 @@ const section = module.exports = {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Video',
       required: [true, "A Section must reference a video"]
-    },
-    name: {
-      type: String,
-      required: [true, "You must have a section name"]
-    },
-    timestamp: {
-      type: Number,
-      required: [true, "You must have a timestamp for the section"]
-    }
+    } 
   }),
 
   model: function(mongooseConnection) {
