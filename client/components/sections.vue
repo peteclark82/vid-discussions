@@ -22,7 +22,6 @@
     <ul>
       <li v-for="section in currentVideoSections" v-bind:class="{ 'active': currentSection == section }">{{section.currentDetail ? section.currentDetail.name : '???'}} - {{section.currentDetail ? section.currentDetail.timestamp : '???'| timestamp}}</li>
     </ul>
-    Current Section : {{ currentSection ? currentSection : "NOTHING!" }}
   </div>  
 </template>
 
