@@ -76,7 +76,7 @@ module.exports = (data, apiRoutes) => {
       let currentDetail = details.find((detail) => String(detail.section) == String(section._id));      
       let currentFields = sectionFields.filter((sectionField) => String(sectionField.section) == String(section._id));      
       if (currentDetail !== undefined) {
-        section.currentDetail = currentDetail;        
+        section.detail = currentDetail;        
         if (currentFields !== undefined) {
           var fields={};
           for(let sectionField of currentFields) {
@@ -87,7 +87,7 @@ module.exports = (data, apiRoutes) => {
       }      
     }
 
-    sections.sort((a,b) => a.currentDetail.timestamp > b.currentDetail.timestamp);
+    sections.sort((a,b) => a.detail.timestamp > b.detail.timestamp);
     
     res.status(200).json({ sections });    
   });    

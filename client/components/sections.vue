@@ -13,7 +13,7 @@
 
     <ul>
       <li v-for="section in currentVideoSections" v-bind:class="{ 'active': currentSection == section }">
-        <section-detail v-model="section.currentDetail"></section-detail>        
+        <section-detail v-model="section.detail"></section-detail>        
       </li>
     </ul>
   </div>  
@@ -60,8 +60,6 @@
           detail: this.sectionDetail
         }).then((section) => {
           this.$store.dispatch(atypes.SET_CURRENT_VIDEO_SECTIONS);
-        }, (error) => {
-          console.error(error);
         });
       }      
     },
