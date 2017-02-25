@@ -12,17 +12,19 @@
       <input type="text" v-model="sectionDetail.name" placeholder="Please enter a section name"/>
       <br/>
       TimeStamp:   
-      <a href="javascript:;" @click="navigateVideo(-20)">&lt;&lt;&lt;</a> |
-      <a href="javascript:;" @click="navigateVideo(-5)">&lt;&lt;</a> |
-      <a href="javascript:;" @click="navigateVideo(-1)">&lt;</a>
-      <input type="text" :value="currentVideoTime | timestamp" readonly style="width:60px;"/>
-      <a href="javascript:;" @click="navigateVideo(1)">&gt;</a>
-      <a href="javascript:;" @click="navigateVideo(5)">&gt;&gt;</a> |
-      <a href="javascript:;" @click="navigateVideo(20)">&gt;&gt;&gt;</a> |
+      <a href="javascript:;" @click="navigateVideo(currentVideoTime-20)">&lt;&lt;&lt;</a> |
+      <a href="javascript:;" @click="navigateVideo(currentVideoTime-5)">&lt;&lt;</a> |
+      <a href="javascript:;" @click="navigateVideo(currentVideoTime-1)">&lt;</a>
+      <input type="text" :value="currentVideoTime | timestamp" readonly style="width:60px;"/>{{currentVideoTime}}
+      <a href="javascript:;" @click="navigateVideo(currentVideoTime+1)">&gt;</a>
+      <a href="javascript:;" @click="navigateVideo(currentVideoTime+5)">&gt;&gt;</a> |
+      <a href="javascript:;" @click="navigateVideo(currentVideoTime+20)">&gt;&gt;&gt;</a> |
     </div>
     
     <div v-if="!editMode && sectionDetail">
-      [<span v-if="!editMode && sectionDetail">{{sectionDetail.timestamp | timestamp}}</span>] <span v-if="!editMode && sectionDetail">{{sectionDetail.name}}</span><br/>
+      [<span v-if="!editMode && sectionDetail">{{sectionDetail.timestamp | timestamp}} ({{sectionDetail.timestamp}})</span>] <span v-if="!editMode && sectionDetail">{{sectionDetail.name}}</span>
+      - 
+      <a href="javascript:;" @click="navigateVideo(sectionDetail.timestamp)">Jump To</a><br/>
     </div>    
 
     <ul v-if="sectionDetail !== null">
@@ -66,8 +68,7 @@
       fieldUpdated() {
         this.$emit('input', this.sectionDetail);
       },
-      navigateVideo(seconds) {
-        const newTime = this.currentVideoTime + seconds;
+      navigateVideo(newTime) {
         this.currentVideoPlayer.seekTo(newTime, true);            
       }
     },
