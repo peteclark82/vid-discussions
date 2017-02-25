@@ -5,7 +5,7 @@
 </style>
 
 <template>
-  <div class="container">
+  <div>
     <div class="row">
       <div class="col s8"><show-video :videoId="videoId"></show-video></div>
       <div class="col s4"><sections :videoID="videoId"></sections></div>

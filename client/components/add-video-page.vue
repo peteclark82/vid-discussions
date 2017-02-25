@@ -22,7 +22,7 @@
   
   export default {
     name: 'add-video-page',
-    props: [ 'videoId' ],
+    props: [],
     data: function() {  
       return {    
         validationErrors : [],
@@ -46,10 +46,7 @@
       }
     },
     mounted() {
-      ( this.videoId !== undefined 
-        ? this.$store.dispatch(atypes.GET_VIDEO_DETAIL, { videoId: this.videoId }) 
-        : this.$store.dispatch(atypes.GET_VIDEO_DETAIL_DEFAULT))
-      .then((videoDetail) => {
+      this.$store.dispatch(atypes.GET_VIDEO_DETAIL_DEFAULT).then((videoDetail) => {
         this.videoDetail = videoDetail;
       });
     },

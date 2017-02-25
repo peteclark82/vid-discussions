@@ -17,11 +17,11 @@ const getters = {
     let section = null;    
     for(let i=0; i<state.currentVideoSections.length; i++) {
       let thisSection = state.currentVideoSections[i], nextSection = state.currentVideoSections[i+1];
-      if (state.currentVideoTime >= thisSection.currentDetail.timestamp) {
+      if (thisSection.currentDetail !== undefined && state.currentVideoTime >= thisSection.currentDetail.timestamp) {
         if (nextSection === undefined) {
           section = thisSection; break;
         } else {
-          if (state.currentVideoTime < nextSection.currentDetail.timestamp) {
+          if (nextSection.currentDetail !== undefined && state.currentVideoTime < nextSection.currentDetail.timestamp) {
             section = thisSection; break;
           }
         }

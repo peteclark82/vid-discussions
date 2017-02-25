@@ -7,7 +7,7 @@ module.exports = (data, apiRoutes) => {
   });
 
   apiRoutes.get('/video/detail-default-values', util.isAuthenticated, (req, res) => {
-    res.status(200).json({ data: templates.default.video.defaultValues });
+    res.status(200).json({ detail: templates.default.video.defaultValues });
   });
 
   apiRoutes.post('/video/:videoId/detail', util.isAuthenticated, async (req, res) => {
@@ -16,7 +16,6 @@ module.exports = (data, apiRoutes) => {
     const { detail } = req.body;
 
     var fields = [];
-
     for(let fieldName in detail) {
       let fieldValue = detail[fieldName];
       let videoField = new data.VideoField({ video: videoId, name: fieldName, value: fieldValue });

@@ -11,6 +11,8 @@ export const GET_VIDEO_DETAIL_DEFAULT = "video-details/GET_VIDEO_DETAIL_DEFAULT"
 export const GET_VIDEO_DETAIL_FORM = "video-details/GET_VIDEO_DETAIL_FORM";
 
 export const ADD_SECTION = "sections/ADD_SECTION";
+export const GET_SECTION_DETAIL_DEFAULT = "sections/GET_SECTION_DETAIL_DEFAULT";
+export const GET_SECTION_DETAIL_FORM = "sections/GET_SECTION_DETAIL_FORM";
 
 
 export const StripNamespace = function(name) {

@@ -23,8 +23,8 @@ const actions = {
   },
   [atypes.StripNamespace(atypes.GET_VIDEO_DETAIL_DEFAULT)] ({ commit }) {
     return new Promise((resolve, reject) => {
-      axios.get(`/api/video/detail-default-values`).then(({ data: { data }}) => {
-        resolve(data);
+      axios.get(`/api/video/detail-default-values`).then(({ data: { detail }}) => {
+        resolve(detail);
       }, ({ data }) => {
         reject(data);
       });

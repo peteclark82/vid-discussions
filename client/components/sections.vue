@@ -7,20 +7,14 @@
 <template>
   <div>
     <h2>Sections</h2>
-    Section Name : <input type="text" v-model="sectionName" placeholder="Please enter a section name"/>
-    TimeStamp: 
-      <a href="javascript:;" @click="navigateVideo(-20)">&lt;&lt;&lt;</a> |
-      <a href="javascript:;" @click="navigateVideo(-5)">&lt;&lt;</a> |
-      <a href="javascript:;" @click="navigateVideo(-1)">&lt;</a>
-      <input type="text" :value="currentVideoTime | timestamp" readonly style="width:60px;"/>
-      <a href="javascript:;" @click="navigateVideo(1)">&gt;</a>
-      <a href="javascript:;" @click="navigateVideo(5)">&gt;&gt;</a> |
-      <a href="javascript:;" @click="navigateVideo(20)">&gt;&gt;&gt;</a> |
-      <br/>
+    <section-detail v-model="sectionDetail" :editMode="true"></section-detail>
+    
     <button @click="addSection">Add Section</button>
 
     <ul>
-      <li v-for="section in currentVideoSections" v-bind:class="{ 'active': currentSection == section }">{{section.currentDetail ? section.currentDetail.name : '???'}} - {{section.currentDetail ? section.currentDetail.timestamp : '???'| timestamp}}</li>
+      <li v-for="section in currentVideoSections" v-bind:class="{ 'active': currentSection == section }">
+        <section-detail v-model="section.currentDetail"></section-detail>        
+      </li>
     </ul>
   </div>  
 </template>
@@ -29,6 +23,8 @@
   import { mapState, mapActions, mapGetters } from 'vuex';
   import * as atypes from '../store/action-types';  
 
+  import SectionDetail from './section-detail.vue';
+
   export default {
     name: 'sections',
     props: [
@@ -36,13 +32,13 @@
     ],
     data: function() {
       return {
-        sectionName: null
+        sectionName: null,
+        sectionDetail: null
       };
     },  
     computed: {
       ...mapState('videos', [
         'currentVideo',
-        'currentVideoPlayer',
         'currentVideoTime',
         'currentVideoSections'
       ]),
@@ -56,21 +52,24 @@
       }
     },
     methods: {
-      addSection() {        
+      addSection() {     
+        this.sectionDetail.timestamp = this.currentVideoTime;
+
         this.$store.dispatch(atypes.ADD_SECTION, {
           videoId: this.currentVideo._id,
-          sectionName: this.sectionName,
-          timestamp: this.currentVideoTime
+          detail: this.sectionDetail
         }).then((section) => {
           this.$store.dispatch(atypes.SET_CURRENT_VIDEO_SECTIONS);
         }, (error) => {
-          alert(error);
+          console.error(error);
         });
-      },
-      navigateVideo(seconds) {
-        const newTime = this.currentVideoTime + seconds;
-        this.currentVideoPlayer.seekTo(newTime, true);            
-      }
-    }
+      }      
+    },
+    mounted() {
+      this.$store.dispatch(atypes.GET_SECTION_DETAIL_DEFAULT).then((detail) => {
+        this.sectionDetail = detail;
+      });
+    },
+    components: { SectionDetail }
   };
 </script>
